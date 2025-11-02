@@ -1,0 +1,51 @@
+# Supabase
+.branches
+.temp
+supabase/.branches
+supabase/.temp
+
+# Local Supabase volumes
+.volumes
+
+# Environment files
+.env*
+!.env.example
+
+# Node modules
+node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# IDE
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*~
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Test coverage
+coverage/
+
+# Build output
+dist/
+build/
+
+# TypeScript
+*.tsbuildinfo
+
+# Misc
+.cache/

@@ -1,0 +1,19 @@
+{
+  "imports": {
+    "std/": "https://deno.land/std@0.168.0/",
+    "std/http/server.ts": "https://deno.land/std@0.168.0/http/server.ts",
+    "std/crypto/": "https://deno.land/std@0.168.0/crypto/",
+    "std/encoding/": "https://deno.land/std@0.168.0/encoding/",
+    "std/fmt/colors.ts": "https://deno.land/std@0.168.0/fmt/colors.ts",
+    "std/log/": "https://deno.land/std@0.168.0/log/",
+    "std/datetime/": "https://deno.land/std@0.168.0/datetime/",
+    "std/uuid/": "https://deno.land/std@0.168.0/uuid/",
+    "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2.39.7",
+    "supabase": "https://esm.sh/@supabase/supabase-js@2.39.7",
+    "expo-server-sdk": "https://esm.sh/expo-server-sdk@3.9.0",
+    "zod": "https://deno.land/x/zod@v3.22.4/mod.ts",
+    "https://deno.land/x/zod@v3.22.4/mod.ts": "https://deno.land/x/zod@v3.22.4/mod.ts",
+    "circular-natal-horoscope-js": "https://esm.sh/circular-natal-horoscope-js@1.1.0",
+    "circular-natal-horoscope-js/": "https://esm.sh/circular-natal-horoscope-js@1.1.0/"
+  }
+}
