@@ -203,7 +203,10 @@ return new Response(JSON.stringify({ error: 'Failed to initialize Supabase clien
             { type: 'new_date_proposal', proposalId: data.id, conversationId: createPayload.conversation_id || undefined }
           );
         }
-}
+      } catch (notificationError) {
+        console.error('Failed to send push notification:', notificationError);
+      }
+
       return new Response(JSON.stringify(data), { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 201 });
 
     } else if (action === 'updateStatus') {
@@ -241,7 +244,10 @@ return new Response(JSON.stringify({ error: 'Failed to initialize Supabase clien
           const { data: targetProfile } = await supabaseClient.from('profiles').select('push_token').eq('id', userToNotifyId).single();
           if (targetProfile?.push_token) await sendPushNotification(targetProfile.push_token, 'Date Proposal Updated!', notificationBody, { type: 'date_proposal_status_update', proposalId: updatePayload.proposal_id, conversationId: updatedProposal.conversation_id || undefined, newStatus: updatePayload.status });
         }
-}
+      } catch (notificationError) {
+        console.error('Failed to send push notification:', notificationError);
+      }
+
       return new Response(JSON.stringify(data), { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200 });
     }
 
