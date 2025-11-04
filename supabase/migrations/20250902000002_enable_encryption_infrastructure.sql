@@ -3,6 +3,9 @@
 -- Phase 1: Enable Advanced Encryption Extensions and Key Management
 -- =====================================================================================
 
+-- Enable pgcrypto extension for gen_random_bytes() function
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
 -- Enable pgsodium extension for advanced encryption capabilities
 -- This provides libsodium functions for secure AES-256-GCM encryption
 -- NOTE: pgsodium is only available in Supabase cloud, not local dev
