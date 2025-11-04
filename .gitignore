@@ -3,6 +3,7 @@
 .temp
 supabase/.branches
 supabase/.temp
+supabase/.linked
 
 # Local Supabase volumes
 .volumes
@@ -49,3 +50,4 @@ build/
 
 # Misc
 .cache/
+cline_mcp_settings.json

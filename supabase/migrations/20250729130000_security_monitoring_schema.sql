@@ -7,7 +7,7 @@ CREATE EXTENSION IF NOT EXISTS "pg_stat_statements";
 
 -- Security events table for comprehensive logging
 CREATE TABLE IF NOT EXISTS security_events (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     event_type VARCHAR(100) NOT NULL,
     severity VARCHAR(20) NOT NULL CHECK (severity IN ('low', 'medium', 'high', 'critical')),
     timestamp TIMESTAMPTZ NOT NULL DEFAULT NOW(),
@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS security_events (
 
 -- Security alerts table for triggered incidents
 CREATE TABLE IF NOT EXISTS security_alerts (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     alert_type VARCHAR(100) NOT NULL,
     severity VARCHAR(20) NOT NULL CHECK (severity IN ('low', 'medium', 'high', 'critical')),
     title VARCHAR(200),
@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS security_alerts (
 
 -- Blocked IPs table for IP reputation management
 CREATE TABLE IF NOT EXISTS blocked_ips (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     ip_address INET NOT NULL UNIQUE,
     blocked_at TIMESTAMPTZ DEFAULT NOW(),
     blocked_until TIMESTAMPTZ,
@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS blocked_ips (
 
 -- User behavior analytics table
 CREATE TABLE IF NOT EXISTS user_behavior_analytics (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
     date DATE NOT NULL DEFAULT CURRENT_DATE,
     total_events INTEGER DEFAULT 0,
@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS user_behavior_analytics (
 
 -- Security metrics aggregation table
 CREATE TABLE IF NOT EXISTS security_metrics (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     metric_type VARCHAR(100) NOT NULL,
     metric_name VARCHAR(100) NOT NULL,
     metric_value DECIMAL(10,2) NOT NULL,
@@ -87,7 +87,7 @@ CREATE TABLE IF NOT EXISTS security_metrics (
 
 -- Password policy violations table
 CREATE TABLE IF NOT EXISTS password_policy_violations (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID REFERENCES auth.users(id) ON DELETE SET NULL,
     email VARCHAR(255),
     violation_type VARCHAR(100) NOT NULL,
@@ -100,7 +100,7 @@ CREATE TABLE IF NOT EXISTS password_policy_violations (
 
 -- API version usage tracking
 CREATE TABLE IF NOT EXISTS api_version_usage (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     requested_version VARCHAR(20) NOT NULL,
     resolved_version VARCHAR(20) NOT NULL,
     endpoint VARCHAR(200) NOT NULL,

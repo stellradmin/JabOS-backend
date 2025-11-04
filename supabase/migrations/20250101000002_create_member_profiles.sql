@@ -22,6 +22,10 @@ CREATE TABLE IF NOT EXISTS public.member_profiles (
   height_cm INTEGER,
   weight_kg DECIMAL(5,2),
 
+  -- Fight experience (for sparring partner matching)
+  bouts INTEGER DEFAULT 0,  -- Number of professional/amateur fights
+  injuries_history TEXT,  -- Important for safe sparring matching
+
   -- Emergency contact
   emergency_contact_name TEXT,
   emergency_contact_phone TEXT,

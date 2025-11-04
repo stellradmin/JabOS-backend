@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS public.attendance (
 CREATE INDEX IF NOT EXISTS idx_attendance_user ON public.attendance(user_id, check_in_time DESC);
 CREATE INDEX IF NOT EXISTS idx_attendance_organization ON public.attendance(organization_id, check_in_time DESC);
 CREATE INDEX IF NOT EXISTS idx_attendance_class ON public.attendance(class_instance_id);
-CREATE INDEX IF NOT EXISTS idx_attendance_date ON public.attendance(organization_id, check_in_time::date);
+-- Date-based queries can use the organization+check_in_time index above
 
 -- Index for active check-ins (not checked out yet)
 CREATE INDEX IF NOT EXISTS idx_attendance_active ON public.attendance(organization_id, user_id)

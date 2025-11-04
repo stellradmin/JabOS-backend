@@ -38,30 +38,11 @@ CHECK (subscription_tier IN ('free', 'premium_1_month', 'premium_3_months', 'pre
 -- 2. CREATE SUBSCRIPTIONS TABLE
 -- ========================================
 
-CREATE TABLE IF NOT EXISTS subscriptions (
-    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-    user_id uuid NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    stripe_subscription_id text UNIQUE NOT NULL,
-    stripe_customer_id text NOT NULL,
-    stripe_price_id text NOT NULL,
-    status text NOT NULL CHECK (status IN ('active', 'trialing', 'past_due', 'canceled', 'unpaid', 'incomplete', 'incomplete_expired')),
-    current_period_start timestamptz NOT NULL,
-    current_period_end timestamptz NOT NULL,
-    cancel_at_period_end boolean DEFAULT false,
-    canceled_at timestamptz,
-    trial_start timestamptz,
-    trial_end timestamptz,
-    metadata jsonb DEFAULT '{}',
-    created_at timestamptz DEFAULT now(),
-    updated_at timestamptz DEFAULT now()
-);
+-- NOTE: Subscriptions table already exists for organization subscriptions
+-- Member subscriptions are tracked in member_subscriptions table (20250101000011)
+-- This migration was for individual user subscriptions but is not needed for gym platform
 
--- Create indexes for subscriptions table
-CREATE INDEX IF NOT EXISTS idx_subscriptions_user_id ON subscriptions(user_id);
-CREATE INDEX IF NOT EXISTS idx_subscriptions_stripe_subscription_id ON subscriptions(stripe_subscription_id);
-CREATE INDEX IF NOT EXISTS idx_subscriptions_stripe_customer_id ON subscriptions(stripe_customer_id);
-CREATE INDEX IF NOT EXISTS idx_subscriptions_status ON subscriptions(status);
-CREATE INDEX IF NOT EXISTS idx_subscriptions_current_period_end ON subscriptions(current_period_end);
+-- Skip subscriptions table creation - use member_subscriptions instead
 
 -- ========================================
 -- 3. CREATE PAYMENTS TABLE

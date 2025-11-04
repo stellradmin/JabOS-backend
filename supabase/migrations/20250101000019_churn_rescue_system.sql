@@ -147,9 +147,10 @@ CREATE TABLE IF NOT EXISTS public.nudge_queue (
 CREATE INDEX IF NOT EXISTS idx_risk_scores_member
   ON public.member_risk_scores(member_id, calculated_date DESC);
 
+-- Index for recent risk scores by organization and band
+-- Note: Date filtering must be done in queries (CURRENT_DATE not IMMUTABLE)
 CREATE INDEX IF NOT EXISTS idx_risk_scores_org_band
-  ON public.member_risk_scores(organization_id, risk_band, calculated_date DESC)
-  WHERE calculated_date >= CURRENT_DATE - INTERVAL '7 days';
+  ON public.member_risk_scores(organization_id, risk_band, calculated_date DESC);
 
 CREATE INDEX IF NOT EXISTS idx_risk_scores_high_risk
   ON public.member_risk_scores(organization_id, calculated_date DESC)

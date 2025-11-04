@@ -12,7 +12,7 @@ CREATE SCHEMA IF NOT EXISTS jabos_mobile;
 -- Tracks like/pass actions (adapted from Stellr's swipes table)
 -- =============================================
 CREATE TABLE jabos_mobile.partner_swipes (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
 
   -- Multi-tenant isolation
   organization_id UUID REFERENCES public.organizations(id) NOT NULL,
@@ -37,7 +37,7 @@ CREATE TABLE jabos_mobile.partner_swipes (
 -- User preferences for partner matching (adapted from Stellr's activity_preferences)
 -- =============================================
 CREATE TABLE jabos_mobile.training_preferences (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID REFERENCES public.users(id) UNIQUE NOT NULL,
   organization_id UUID REFERENCES public.organizations(id) NOT NULL,
 
@@ -71,7 +71,7 @@ CREATE TABLE jabos_mobile.training_preferences (
 -- Confirmed matches (adapted from Stellr's matches table)
 -- =============================================
 CREATE TABLE jabos_mobile.training_matches (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
 
   -- Multi-tenant isolation
   organization_id UUID REFERENCES public.organizations(id) NOT NULL,
@@ -118,7 +118,7 @@ CREATE TABLE jabos_mobile.training_matches (
 -- User can send match requests which can be accepted/declined
 -- =============================================
 CREATE TABLE jabos_mobile.match_requests (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
 
   -- Multi-tenant isolation
   organization_id UUID REFERENCES public.organizations(id) NOT NULL,
@@ -158,7 +158,7 @@ CREATE TABLE jabos_mobile.match_requests (
 -- Track daily invite consumption (5/day free, 20/day premium via membership plans)
 -- =============================================
 CREATE TABLE jabos_mobile.invite_usage_log (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
 
   -- User who sent invite
   user_id UUID REFERENCES public.users(id) NOT NULL,
@@ -184,7 +184,7 @@ CREATE TABLE jabos_mobile.invite_usage_log (
 -- Messaging between matched partners (from Stellr, unchanged)
 -- =============================================
 CREATE TABLE jabos_mobile.conversations (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
 
   -- Conversation participants (no organization_id - conversations span organizations)
   participant_1_id UUID REFERENCES public.users(id) NOT NULL,
@@ -211,7 +211,7 @@ CREATE TABLE jabos_mobile.conversations (
 -- Individual messages (from Stellr, unchanged)
 -- =============================================
 CREATE TABLE jabos_mobile.messages (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
 
   -- Message details
   conversation_id UUID REFERENCES jabos_mobile.conversations(id) NOT NULL,
@@ -236,7 +236,7 @@ CREATE TABLE jabos_mobile.messages (
 -- User blocking system (from Stellr)
 -- =============================================
 CREATE TABLE jabos_mobile.user_blocks (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
 
   -- Block relationship
   blocking_user_id UUID REFERENCES public.users(id) NOT NULL,
@@ -259,7 +259,7 @@ CREATE TABLE jabos_mobile.user_blocks (
 -- User reporting system (from Stellr)
 -- =============================================
 CREATE TABLE jabos_mobile.issue_reports (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
 
   -- Reporter
   user_id UUID REFERENCES public.users(id),
@@ -285,7 +285,7 @@ CREATE TABLE jabos_mobile.issue_reports (
 -- Performance optimization - cache expires after 7 days
 -- =============================================
 CREATE TABLE jabos_mobile.user_compatibility_cache (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
 
   -- User pair (user1_id is always lower UUID)
   user1_id UUID REFERENCES public.users(id) NOT NULL,

@@ -12,7 +12,7 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 -- ROLES TABLE
 -- ============================================================================
 CREATE TABLE IF NOT EXISTS public.roles (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name TEXT UNIQUE NOT NULL CHECK (name IN (
         'super_admin',
         'admin',
@@ -41,7 +41,7 @@ CREATE INDEX idx_roles_active ON public.roles(is_active);
 -- USER ROLES TABLE
 -- ============================================================================
 CREATE TABLE IF NOT EXISTS public.user_roles (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
     role_id UUID NOT NULL REFERENCES public.roles(id) ON DELETE RESTRICT,
     assigned_by UUID NOT NULL REFERENCES auth.users(id),
@@ -67,7 +67,7 @@ CREATE INDEX idx_user_roles_expires ON public.user_roles(expires_at);
 -- ROLE AUDIT LOGS TABLE
 -- ============================================================================
 CREATE TABLE IF NOT EXISTS public.role_audit_logs (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID NOT NULL REFERENCES auth.users(id),
     target_user_id UUID NOT NULL REFERENCES auth.users(id),
     action TEXT NOT NULL CHECK (action IN ('assign', 'revoke', 'expire')),

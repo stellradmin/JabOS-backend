@@ -330,33 +330,11 @@ CREATE POLICY "Staff can view org subscriptions"
   );
 
 -- =============================================================================
--- MESSAGES
+-- MESSAGES & CONVERSATIONS
 -- =============================================================================
-
--- Users can view messages they sent or received
-DROP POLICY IF EXISTS "Users can view own messages" ON public.messages;
-CREATE POLICY "Users can view own messages"
-  ON public.messages FOR SELECT
-  USING (
-    sender_id = auth.uid() OR recipient_id = auth.uid()
-  );
-
--- Users can send messages within their organization
-DROP POLICY IF EXISTS "Users can send messages" ON public.messages;
-CREATE POLICY "Users can send messages"
-  ON public.messages FOR INSERT
-  WITH CHECK (
-    sender_id = auth.uid() AND
-    organization_id IN (
-      SELECT organization_id FROM public.users WHERE id = auth.uid()
-    )
-  );
-
--- Users can update their own messages (mark as deleted)
-DROP POLICY IF EXISTS "Users can update own messages" ON public.messages;
-CREATE POLICY "Users can update own messages"
-  ON public.messages FOR UPDATE
-  USING (sender_id = auth.uid() OR recipient_id = auth.uid());
+-- Note: Conversation-based messaging RLS policies are defined in 0001_create_base_schema.sql
+-- The messages table uses conversation_id, not direct recipient_id
+-- No additional policies needed here
 
 -- =============================================================================
 -- ANNOUNCEMENTS

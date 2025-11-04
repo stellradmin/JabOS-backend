@@ -1,7 +1,8 @@
--- Create issue_reports table
-CREATE TABLE IF NOT EXISTS issue_reports (
+-- Create issue_reports table (for member bug/issue reporting)
+CREATE TABLE IF NOT EXISTS public.issue_reports (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+    organization_id UUID NOT NULL,  -- Multi-tenant isolation
+    user_id UUID NOT NULL REFERENCES public.users(id) ON DELETE CASCADE,
     issue_description TEXT NOT NULL,
     status TEXT NOT NULL DEFAULT 'open' CHECK (status IN ('open', 'in_progress', 'resolved', 'closed')),
     admin_notes TEXT,

@@ -33,8 +33,9 @@ CREATE TABLE IF NOT EXISTS public.announcements (
 
 -- Create indexes
 CREATE INDEX IF NOT EXISTS idx_announcements_organization ON public.announcements(organization_id, published_at DESC);
+-- Active (published) announcements - expires_at check must be done in queries
 CREATE INDEX IF NOT EXISTS idx_announcements_active ON public.announcements(organization_id, published_at)
-  WHERE is_draft = false AND (expires_at IS NULL OR expires_at > NOW());
+  WHERE is_draft = false;
 CREATE INDEX IF NOT EXISTS idx_announcements_pinned ON public.announcements(organization_id, is_pinned)
   WHERE is_pinned = true;
 
